@@ -21,9 +21,12 @@ exports.verifyOrdinaryUser = function (req, res, next) {
                 err.status = 401;
                 return next(err);
             } else {
-                // if everything is good, save to request for use in other routes
                 req.decoded = decoded;
-                next();
+                User.findById(decoded._doc._id, function(err, res) {
+                    if (err) return next(err);
+                    req.user = res._doc;
+                    next();
+                });
             }
         });
     } else {
