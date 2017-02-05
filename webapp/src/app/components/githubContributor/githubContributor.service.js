@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('teste')
+    .module('campanhas-enquetes')
     .factory('githubContributor', githubContributor);
 
   /** @ngInject */

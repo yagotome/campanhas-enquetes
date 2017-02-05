@@ -3,8 +3,9 @@
   'use strict';
 
   angular
-    .module('teste')
+    .module('campanhas-enquetes')
     .constant('malarkey', malarkey)
-    .constant('moment', moment);
+    .constant('moment', moment)
+    .constant('$backendUrl', 'http://localhost:3000');
 
 })();

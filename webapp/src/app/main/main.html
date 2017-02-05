@@ -1,21 +1,23 @@
 <div class="jumbotron">
-
-  <div class="text-center">
-    <h1>Crie sua campanha</h1>
-    <br>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-6 col-md-4" ng-repeat="awesomeThing in main.awesomeThings | orderBy:'rank'">
-      <div class="thumbnail">
-        <img class="pull-right" ng-src="assets/images/{{ awesomeThing.logo }}" alt="{{ awesomeThing.title }}">
-        <div class="caption">
-          <h3>{{ awesomeThing.title }}</h3>
-          <p>{{ awesomeThing.description }}</p>
-          <p><a ng-href="{{awesomeThing.url}}">{{ awesomeThing.url }}</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
+	<h3 class="text-center"><b>Crie sua campanha</b></h3>
+	<br>
+	<form name="campaignForm">
+		<input class="form-control" ng-model="main.campaign.title" placeholder="Título" name="title" ng-required="true">
+		<br>
+		<textarea class="form-control" ng-model="main.campaign.description" placeholder="Descrição" name="description" ng-required="true"></textarea>
+		<br>
+		<input class="form-control" ng-model="main.campaign.hashtag" placeholder="Hashtag da campanha (exemplo: #MaisShampooSedoso)"
+			name="hashtag" ng-required="true" ng-pattern="/^#\w+$/">
+			<br>
+			<h5>Itens a serem votados</h5>
+			<div ng-repeat="item in main.campaign.items">
+				<input class="form-control" ng-model="item.hashtag" placeholder="Hashtag do item (exemplo: #cabeloslisos)"
+					name="item-hashtag" ng-required="true" ng-pattern="/^#\w+$/">
+				<br>
+			</div>
+			<button type="button" class="btn btn-default" ng-click="main.newItem(main.campaign)">Novo Item</button>
+			<br>
+			<br>
+	</form>
+	<button class="btn btn-primary btn-block" ng-click="main.createCampaign(main.campaign)" ng-disabled="campaignForm.$invalid">Criar campanha</button>
 </div>

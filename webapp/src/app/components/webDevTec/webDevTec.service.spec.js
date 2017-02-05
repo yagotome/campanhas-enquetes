@@ -4,7 +4,7 @@
   describe('service webDevTec', function() {
     var webDevTec;
 
-    beforeEach(module('teste'));
+    beforeEach(module('campanhas-enquetes'));
     beforeEach(inject(function(_webDevTec_) {
       webDevTec = _webDevTec_;
     }));

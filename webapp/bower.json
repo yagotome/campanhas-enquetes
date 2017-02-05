@@ -1,5 +1,5 @@
 {
-  "name": "teste",
+  "name": "campanhas-enquetes",
   "version": "0.0.0",
   "dependencies": {
     "angular-animate": "~1.5.3",
