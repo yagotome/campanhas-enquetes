@@ -21,7 +21,6 @@ router.post('/votes', Verify.verifyOrdinaryUser, function (req, res, next) {
             timeout_ms: 6000,
         });
 
-        // var campaign = user.campaigns.find(c => c._id == req.body.campaignId);
         var campaign = user.campaigns[0]; // FIXME: Consider all campaigns later.
 
         campaign.items.forEach(item => {

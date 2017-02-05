@@ -26,12 +26,9 @@
 					},
 					userCampaign: function (MainService, $cookies, loggedIn) {
 						if (!loggedIn) return null;
-						console.log('passou');
 						return MainService.getUserCampaign().then(function (response) {
-							console.log('passou2');
 							return response.data.campaign;
 						}, function (error) {
-							console.log('passou3');
 							return null;
 						});
 					}
@@ -46,9 +43,7 @@
 				controllerAs: 'vm',
 				onEnter: function ($stateParams, $cookies) {
 					if ($stateParams.token) {
-						console.log('antes', $cookies.get('token'));
 						$cookies.put('token', $stateParams.token);
-						console.log('depois', $cookies.get('token'));
 						if ($stateParams.user) $cookies.put('user', $stateParams.user);
 						return true;
 					}

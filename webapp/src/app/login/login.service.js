@@ -9,7 +9,6 @@
         };
 
         var _checkSession = function () {
-            console.log($cookies.get('token'));
             return $http.get($backendUrl + '/auth/checkSession?token=' + $cookies.get('token'));
         };
 
