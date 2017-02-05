@@ -6,9 +6,9 @@ Campanhas é uma aplicação em que você pode criar uma campanha na forma de vo
 
 ### Pré requisitos
 
-    - NodeJS versão v4.6.1: https://nodejs.org/download/release/v4.6.1/
-    - npm
-    - mongoDB: https://www.mongodb.com/download-center#community
+- NodeJS versão v4.6.1: https://nodejs.org/download/release/v4.6.1/
+- npm
+- mongoDB: https://www.mongodb.com/download-center#community
 
 ### Passos seguintes
 
