@@ -3,17 +3,17 @@
 
     angular.module("campanhas-enquetes").factory("LoginInterceptor", LoginInterceptor);
 
-    function LoginInterceptor($q, $location, $rootScope, $window) {
+    function LoginInterceptor($q, $location, $rootScope, $cookies) {
         return {
             request: function (config) {
-                if ($window.localStorage.getItem('token')) $rootScope.token = $window.localStorage.getItem('token');
+                if ($cookies.get('token')) $rootScope.token = $cookies.get('token');
                 if ($rootScope.token) config.headers.token = $rootScope.token;                
                 return config;
             },
             responseError: function (rejection) {
                 if (rejection.status === 401 || rejection.status === 403) {
-                    $window.localStorage.setItem('user', undefined);
-                    $window.localStorage.setItem('token', undefined);
+                    $cookies.remove('user');
+                    $cookies.remove('token');
                     $location.path("/login");
                 }
                 return $q.reject(rejection);

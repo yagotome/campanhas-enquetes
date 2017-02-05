@@ -11,9 +11,9 @@
 			<br>
 			<h5>Itens a serem votados</h5>
 			<div ng-repeat="item in main.campaign.items">
-				<input class="form-control" ng-model="item.hashtag" placeholder="Hashtag do item (exemplo: #cabeloslisos)"
-					name="item-hashtag" ng-required="true" ng-pattern="/^#\w+$/">
-				<br>
+				<input class="form-control" ng-model="item.hashtag" placeholder="Hashtag do item (exemplo: #cabeloslisos)" name="item-hashtag"
+					ng-required="true" ng-pattern="/^#\w+$/">
+					<br>
 			</div>
 			<button type="button" class="btn btn-default" ng-click="main.newItem(main.campaign)">Novo Item</button>
 			<br>
@@ -22,5 +22,10 @@
 	<button class="btn btn-primary btn-block" ng-click="main.createCampaign(main.campaign)" ng-disabled="campaignForm.$invalid">Criar campanha</button>
 </div>
 <div class="jumbotron" ng-if="main.userCampaign">
-	<h4 class="text-center"><b>{{main.userCampaign.title}}</b></h3>
+	<h3 class="text-center"><b>{{main.userCampaign.title}}</b></h3>
+	<h5 class="text-center">{{main.userCampaign.description}}</h5>
+	<div ng-repeat="item in main.userCampaign.items">
+		<p>{{'#' + item.hashtag + '\t' + item.votes}}</p>
+	</div>
+	<button class="btn btn-danger btn-block" ng-click="main.finishCampaign(main.campaign)">Encerrar campanha</button>
 </div>

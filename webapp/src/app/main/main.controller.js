@@ -6,10 +6,12 @@
 		.controller('MainController', MainController);
 
 	/** @ngInject */
-	function MainController(MainService, LoginService, $state,  $window, userCampaign, $log) {
+	function MainController(MainService, LoginService, $state,  $cookies, userCampaign) {
 		var vm = this;
 
-		if ($window.localStorage.getItem('token') == 'undefined') {
+		// console.dir($cookies);
+
+		if (!$cookies.get('token')) {
 			$state.go('login'); // go to login
 		}
 
@@ -22,13 +24,11 @@
 				item.hashtag = item.hashtag.substring(1)
 			});
 			MainService.createCampaign(_campaign).then(function (response) {
-				if (response.data)
-					$log.debug(response.data);
-				else
-					$log.error('error', response);
+				vm.userCampaign = response.data.campaign;
+				vm.campaign = null;
 			}, function (error) {
 				if (error.status == 401) {
-					$window.localStorage.setItem('token', undefined);
+					$cookies.remove('token');
 					$state.go('login');
 				}
 			});

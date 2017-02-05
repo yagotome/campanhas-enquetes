@@ -29,16 +29,22 @@ router.get('/twitter/callback', function (req, res, next) {
             //     success: true,
             //     token: token
             // });
-            res.status(200).end(`<a href="http://localhost:3001/#/login?token=${token}&user=${user.name}">Clique aqui para continuar</a>`);
+            res.status(200).redirect(`http://localhost:3001/#/login?token=${token}&user=${user.username}`);//`<a href="http://localhost:3001/#/login?token=${token}&user=${user.username}">Clique aqui para continuar</a>`);
         });
     })(req, res, next);
 });
 
-router.get('/checkSession/:token', function (req, res, next) {
-    console.log(req.user);
-    if (req.user && req.params.token == Verify.getToken(req.user))
-        return res.status(200).json({ success: true });
-    res.status(401).json({ success: false });
+router.get('/checkSession', Verify.verifyOrdinaryUser, function (req, res, next) {
+    // console.log(req.params.userId);
+    // User.findById(req.params.userId, function (err, result) {
+    //     if (err) next(err);
+    //     console.log(result);
+    //     if (req.params.token == Verify.getToken(result))
+    //         return res.status(200).json({ success: true });
+    //     res.status(401).json({ success: false });
+    // });
+    console.log('session ok');
+    res.status(200).json({ success: true });
 });
 
 module.exports = router;
