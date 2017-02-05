@@ -3,11 +3,6 @@ var router = express.Router();
 var User = require('../models/user');
 var Verify = require('./verify');
 
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
-});
-
 router.get('/logout', function (req, res) {
   req.logout();
   res.status(200).json({
@@ -19,10 +14,6 @@ router.post('/campaign/create', Verify.verifyOrdinaryUser, function (req, res, n
   var user = req.user;
   var campaign = req.body.campaign;
 
-  // console.log('passou', user);
-
-  user.campaigns.push(campaign);
-
   User.findById(user._id, function (err, result) {
     if (err) return next(err);
     if (!result) {
@@ -33,11 +24,44 @@ router.post('/campaign/create', Verify.verifyOrdinaryUser, function (req, res, n
     result._doc.campaigns.push(campaign);
     result.save(function (err, doc) {
       if (err) return next(err);
+      campaign = doc._doc.campaigns[0]; // FIXME: Consider all campaigns later.
       res.status(200).json({
         status: 'Ok',
-        success: true
+        success: true,
+        campaign: campaign
       });
     })
+  });
+});
+
+router.get('/campaign', Verify.verifyOrdinaryUser, function (req, res, next) {
+  var user = req.user;
+
+  User.findById(user._id, function (err, result) {
+    if (err) return next(err);
+    if (!result) {
+      var err = new Error('You are not authenticated!');
+      err.status = 401;
+      return next(err);
+    }
+    var campaigns = result._doc.campaigns;
+    var campaign = null;
+    if (campaigns.length > 0) campaign = campaigns[0] // FIXME: Consider all campaigns later.
+    res.status(200).json({
+      status: 'Ok',
+      success: true,
+      campaign: campaign
+    });
+  });
+});
+
+router.get('/campaign/finish', Verify.verifyOrdinaryUser, function (req, res, next) {
+  if (req.session.streams) {
+    delete req.session.streams;
+  }
+  return res.status(200).json({
+    status: 'Ok',
+    success: true
   });
 });
 

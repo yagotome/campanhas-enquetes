@@ -1,4 +1,4 @@
-<div class="jumbotron">
+<div class="jumbotron" ng-if="!main.userCampaign">
 	<h3 class="text-center"><b>Crie sua campanha</b></h3>
 	<br>
 	<form name="campaignForm">
@@ -20,4 +20,7 @@
 			<br>
 	</form>
 	<button class="btn btn-primary btn-block" ng-click="main.createCampaign(main.campaign)" ng-disabled="campaignForm.$invalid">Criar campanha</button>
+</div>
+<div class="jumbotron" ng-if="main.userCampaign">
+	<h4 class="text-center"><b>{{main.userCampaign.title}}</b></h3>
 </div>

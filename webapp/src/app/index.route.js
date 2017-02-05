@@ -22,6 +22,14 @@
               $window.localStorage.setItem('user', undefined);
               return false;
             });
+          },
+          userCampaign: function (LoginService) {
+            LoginService.getUserCampaign().then(function (response) {
+              if (response.status == 200) {
+                return response.data.campaign;
+              }
+              return null;
+            });
           }
         }
         // resolve: {

@@ -6,14 +6,14 @@
 		.controller('MainController', MainController);
 
 	/** @ngInject */
-	function MainController(MainService, LoginService, $state, $window) {
+	function MainController(MainService, LoginService, $state,  $window, userCampaign, $log) {
 		var vm = this;
-
-		console.log($window.localStorage.getItem('token'));
 
 		if ($window.localStorage.getItem('token') == 'undefined') {
 			$state.go('login'); // go to login
 		}
+
+		vm.userCampaign = userCampaign;
 
 		vm.createCampaign = function (campaign) {
 			var _campaign = angular.copy(campaign);
@@ -22,11 +22,10 @@
 				item.hashtag = item.hashtag.substring(1)
 			});
 			MainService.createCampaign(_campaign).then(function (response) {
-				console.log('passou', response);
 				if (response.data)
-					console.log(response.data);
+					$log.debug(response.data);
 				else
-					console.log('error', response);
+					$log.error('error', response);
 			}, function (error) {
 				if (error.status == 401) {
 					$window.localStorage.setItem('token', undefined);
