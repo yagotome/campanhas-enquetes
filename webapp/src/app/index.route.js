@@ -6,7 +6,7 @@
     .config(routerConfig);
 
   /** @ngInject */
-  function routerConfig($stateProvider, $urlRouterProvider, $window) {
+  function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
         url: '/',
@@ -15,7 +15,7 @@
         controllerAs: 'main',
 
         resolve: {
-          loggedIn: function (LoginService) {
+          loggedIn: function (LoginService, $window) {
             LoginService.checkSession($window.localStorage.getItem('token')).then(function (response) {
               if (response.status == 200) return true;
               $window.localStorage.setItem('token', undefined);
@@ -23,7 +23,7 @@
               return false;
             });
           },
-          userCampaign: function (LoginService) {
+          userCampaign: function (LoginService, $window) {
             LoginService.getUserCampaign().then(function (response) {
               if (response.status == 200) {
                 return response.data.campaign;
