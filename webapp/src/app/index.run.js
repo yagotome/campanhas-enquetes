@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,9 +6,20 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log) {
+  function runBlock($rootScope, $state) {
+    $rootScope.$on('$stateChangeStart', function (e, toState, toParams
+      , fromState, fromParams) {
 
-    $log.debug('runBlock end');
+      var isLogin = toState.name === "login";
+      if (isLogin) {
+        return;
+      }
+
+      if (!window.localStorage.getItem('token')) {
+        e.preventDefault(); // stop current execution
+        $state.go('login'); // go to login
+      }
+    });
   }
 
 })();

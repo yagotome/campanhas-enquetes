@@ -6,11 +6,15 @@
 		.controller('MainController', MainController);
 
 	/** @ngInject */
-	function MainController(MainService) {
+	function MainController(MainService, LoginService) {
 		var vm = this;
-		
+
+		if (!window.localStorage.getItem('token')) {
+			$state.go('login'); // go to login
+		}
+
 		vm.createCampaign = function (campaign) {
-			MainService.createCampaign(campaign).then(function (response){
+			MainService.createCampaign(campaign).then(function (response) {
 				if (response.data)
 					console.log(response.data);
 				else
