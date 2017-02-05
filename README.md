@@ -23,7 +23,7 @@ Depois, clone este repositório:
 
 Então, vá na pasta desse repositório e execute:
 
-    npm install -g gulp bower
+    npm install -g gulp gulp-cli bower
     cd webservice
     npm install
     npm start

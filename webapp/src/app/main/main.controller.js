@@ -18,7 +18,9 @@
 		vm.createCampaign = function (campaign) {
 			var _campaign = angular.copy(campaign);
 			_campaign.hashtag = _campaign.hashtag.substring(1);
-			_campaign.items.forEach(item => item.hashtag = item.hashtag.substring(1));
+			_campaign.items.forEach(function (item) {
+				item.hashtag = item.hashtag.substring(1)
+			});
 			MainService.createCampaign(_campaign).then(function (response) {
 				console.log('passou', response);
 				if (response.data)
