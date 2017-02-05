@@ -7,24 +7,46 @@ var https = require('https');
 var Twit = require('twit');
 var config = require('../config');
 
-router.get('/votes', Verify.verifyOrdinaryUser, function (req, res, next) {
+router.post('/votes', Verify.verifyOrdinaryUser, function (req, res, next) {
+    
+    var user = req.decoded._doc;
+
     var T = new Twit({
         consumer_key: config.twitter.consumerKey,
         consumer_secret: config.twitter.consumerSecret,
-        access_token: req.decoded._doc.OauthToken,
-        access_token_secret: req.decoded._doc.OauthTokenSecret,
-        timeout_ms: 6000, 
+        access_token: user.OauthToken,
+        access_token_secret: user.OauthTokenSecret,
+        timeout_ms: 6000,
     });
 
-    T.get('search/tweets', { q: req.query.q, include_entities: false }, function (err, data, response) {
-        if (err) return next(err);
-        res.status(200).json({
-            status: 'Ok',
-            success: true,
-            data: {
-                count: data.statuses.length
+    var campaign = user.campaigns.id(req.body.campaignId);
+
+    campaign.items.forEach(item => {
+
+        var stream = T.stream('statuses/filter', { track: item.hashtag })
+
+        stream.on('tweet', function (tweet) {
+            if (tweet.entities.hashtags.some(obj => obj.text === item.hashtag)) {
+                item.votes++;
+                item.save(function (err, resp) {
+                    if (err) throw err;
+                });
             }
         });
+
+        stream.on('error', function (err) {
+            console.log(err);
+        });
+
+        stream.on('disconnect', function (disconnectMessage) {
+            console.log('disconnect', disconnectMessage);
+        });
+
+    });
+
+    res.status(200).json({
+        status: 'Ok',
+        success: true
     });
 });
 
