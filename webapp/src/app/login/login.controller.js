@@ -11,7 +11,7 @@
 
 		console.log(window.localStorage.getItem('token'));
 
-		if (!!window.localStorage.getItem('token')) {
+		if (window.localStorage.getItem('token') != 'undefined') {
 			$state.go('home');
 		}
 		// vm.login = function() {

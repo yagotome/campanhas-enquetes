@@ -22,8 +22,14 @@ exports.verifyOrdinaryUser = function (req, res, next) {
                 return next(err);
             } else {
                 req.decoded = decoded;
-                User.findById(decoded._doc._id, function(err, res) {
+                User.findById(decoded._doc._id, function (err, res) {
                     if (err) return next(err);
+                    if (!res) {
+                        var err = new Error('You are not authenticated!');
+                        err.status = 401;
+                        next(err)
+                        return;
+                    }
                     req.user = res._doc;
                     next();
                 });

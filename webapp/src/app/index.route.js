@@ -16,11 +16,6 @@
 
         resolve: {
           loggedIn: function (LoginService, $stateParams) {
-            if ($stateParams.token) {
-              window.localStorage.setItem('token', $stateParams.token);
-              if ($stateParams.user) window.localStorage.setItem('user', $stateParams.user);
-              return true;
-            }
             LoginService.checkSession(window.localStorage.getItem('token')).then(function (response) {
               if (response.status == 200) return true;
               window.localStorage.setItem('token', undefined);
@@ -47,7 +42,14 @@
         url: '/login?token&user',
         templateUrl: 'app/login/login.html',
         controller: 'LoginController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        onEnter: function ($stateParams) {
+          if ($stateParams.token) {
+            window.localStorage.setItem('token', $stateParams.token);
+            if ($stateParams.user) window.localStorage.setItem('user', $stateParams.user);
+            return true;
+          }
+        }
       });
 
     $urlRouterProvider.otherwise('/');
