@@ -28,7 +28,7 @@ Então, vá na pasta desse repositório e execute:
     npm install
     npm start
 
-Em outro instância do terminal, na pasta desse repositório, execute:
+Em outra instância do terminal, na pasta desse repositório, execute:
 
     cd webapp
     npm install
