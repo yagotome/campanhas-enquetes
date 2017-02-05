@@ -1,5 +1,5 @@
 var User = require('../models/user');
-var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+var jwt = require('jsonwebtoken');
 var config = require('../config.js');
 
 exports.getToken = function (user) {

@@ -3,10 +3,11 @@ var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
 
 var User = new Schema({
-    // username: String,
-    // password: String,
+    username: String,
+    name: String,
     twitterId: String,
-    OauthToken: String
+    OauthToken: String,
+    OauthTokenSecret: String
 });
 
 User.plugin(passportLocalMongoose);

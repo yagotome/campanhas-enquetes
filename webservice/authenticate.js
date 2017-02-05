@@ -24,14 +24,15 @@ exports.twitter = passport.use(new TwitterStrategy({
             } else {
                 user = new User({
                     name: profile.displayName,
-                    username: profile.username
+                    username: profile.username,
+                    twitterId: profile.id,
+                    OauthToken: token,
+                    OauthTokenSecret: tokenSecret
                 });
-                user.twitterId = profile.id;
-                user.OauthToken = token;
                 user.save(function (err) {
                     if (err) {
                         console.log(err);
-                    } else {                     
+                    } else {
                         callback(null, user);
                     }
                 });
