@@ -2,6 +2,6 @@
   'use strict';
 
   angular
-    .module('campanhas-enquetes', ['ngAnimate', 'ngCookies', 'ngSanitize', 'ngMessages', 'ui.router', 'ui.bootstrap', 'toastr']);
+    .module('campanhas-enquetes', ['ui.router', 'ui.bootstrap']);
 
 })();

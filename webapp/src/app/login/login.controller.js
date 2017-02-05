@@ -6,12 +6,10 @@
 		.controller('LoginController', LoginController);
 
 	/** @ngInject */
-	function LoginController(LoginService, $rootScope, $state) {
-		var vm = this;
+	function LoginController(LoginService, $rootScope, $state, $window) {
+		// var vm = this;
 
-		console.log(window.localStorage.getItem('token'));
-
-		if (window.localStorage.getItem('token') != 'undefined') {
+		if ($window.localStorage.getItem('token') != 'undefined') {
 			$state.go('home');
 		}
 		// vm.login = function() {

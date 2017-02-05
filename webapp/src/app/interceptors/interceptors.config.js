@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module("campanhas-enquetes").config(function ($httpProvider) {
+    angular.module("campanhas-enquetes").config(function (/*$httpProvider*/) {
         // $httpProvider.interceptors.push("LoginInterceptor");
     });
 })();
