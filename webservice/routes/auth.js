@@ -30,7 +30,6 @@ router.get('/twitter/callback', function (req, res, next) {
 });
 
 router.get('/checkSession', Verify.verifyOrdinaryUser, function (req, res, next) {
-    console.log('session ok');
     res.status(200).json({ success: true });
 });
 

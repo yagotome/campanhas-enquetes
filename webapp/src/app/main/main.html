@@ -23,7 +23,7 @@
 </div>
 <div class="jumbotron" ng-if="main.userCampaign">
 	<h3 class="text-center"><b>{{main.userCampaign.title}}</b></h3>
-	<h5 class="text-center">{{main.userCampaign.description}}</h5>
+	<h5 class="text-center">{{main.userCampaign.description}} {{'#' + main.userCampaign.hashtag}}</h5>
 	<div ng-repeat="item in main.userCampaign.items">
 		<p>{{'#' + item.hashtag + '\t' + item.votes}}</p>
 	</div>
