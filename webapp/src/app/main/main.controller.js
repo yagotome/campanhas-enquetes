@@ -34,7 +34,14 @@
 			});
 		};
 
-		vm.campaign = { items: [{}] };
+		vm.finishCampaign = function (campaign) {
+			MainService.finishUserCampaign().then(function (response) {
+				vm.userCampaign = null;
+				vm.campaign = { items: [{},{}] };
+			});
+		};
+
+		vm.campaign = { items: [{},{}] };
 	}
 
 	MainController.prototype.newItem = function (campaign) {

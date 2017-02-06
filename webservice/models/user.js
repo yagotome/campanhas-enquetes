@@ -6,7 +6,7 @@ var Campaign = new Schema({
     title: String,
     description: String,
     hashtag: String,
-    items: [{ hashtag: String, votes: Number }]
+    items: [{ hashtag: String, votes: { type: Number, default: 0 } }]
 });
 
 var User = new Schema({

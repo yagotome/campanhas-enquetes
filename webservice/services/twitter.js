@@ -1,18 +1,11 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
 var User = require('../models/user');
-var Verify = require('./verify');
-var https = require('https');
 var Twit = require('twit');
 var config = require('../config');
 
-router.post('/votes', Verify.verifyOrdinaryUser, function (req, res, next) {
-    var user = req.user;
-
+exports.startVotesCounters = function (user, req) {
     if (user.campaigns.length > 0) {
         req.session.streams = [];
-        
+
         var T = new Twit({
             consumer_key: config.twitter.consumerKey,
             consumer_secret: config.twitter.consumerSecret,
@@ -25,7 +18,7 @@ router.post('/votes', Verify.verifyOrdinaryUser, function (req, res, next) {
 
         campaign.items.forEach(item => {
 
-            var stream = T.stream('statuses/filter', { track: item.hashtag })
+            var stream = T.stream('statuses/filter', { track: campaign.hashtag + ' ' + item.hashtag })
 
             stream.on('tweet', function (tweet) {
                 if (tweet.entities.hashtags.some(obj => obj.text === item.hashtag)) {
@@ -47,11 +40,4 @@ router.post('/votes', Verify.verifyOrdinaryUser, function (req, res, next) {
             req.session.streams.push(stream);
         });
     }
-    
-    res.status(200).json({
-        status: 'Ok',
-        success: true
-    });
-});
-
-module.exports = router;
+};
